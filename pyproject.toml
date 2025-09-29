@@ -1,0 +1,115 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "degscore"
+version = "2.1.0"
+description = "DegScore: A ridge regression model to predict RNA degradation"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Hannah Wayment-Steele", email = "hannah.wayment-steele@stanford.edu"},
+    {name = "Dong Soo Kim", email = "dongsoo.kim@stanford.edu"}
+]
+maintainers = [
+    {name = "Hannah Wayment-Steele", email = "hannah.wayment-steele@stanford.edu"}
+]
+keywords = ["RNA", "degradation", "bioinformatics", "machine learning", "structure prediction"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.19.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.800",
+]
+arnie = [
+    "arnie>=0.1.0",
+]
+all = [
+    "degscore[dev,arnie]",
+]
+
+[project.urls]
+Homepage = "https://github.com/Wayment-Steele-Lab/DegScore"
+Repository = "https://github.com/Wayment-Steele-Lab/DegScore"
+Documentation = "https://github.com/Wayment-Steele-Lab/DegScore#readme"
+"Bug Tracker" = "https://github.com/Wayment-Steele-Lab/DegScore/issues"
+DOI = "https://doi.org/10.5281/zenodo.7130659"
+
+[project.scripts]
+degscore = "DegScore:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["DegScore*", "assign_loop_type*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.txt", "*.png", "*.csv", "*.json"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.pytest.ini_options]
+testpaths = ["test.py"]
+python_files = ["test*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "arnie.*",
+    "numpy.*",
+]
+ignore_missing_imports = true
