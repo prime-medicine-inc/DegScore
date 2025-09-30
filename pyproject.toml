@@ -1,19 +1,19 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
-[project]
+[tool.poetry]
 name = "degscore"
 version = "2.1.0"
 description = "DegScore: A ridge regression model to predict RNA degradation"
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "MIT"
 authors = [
-    {name = "Hannah Wayment-Steele", email = "hannah.wayment-steele@stanford.edu"},
-    {name = "Dong Soo Kim", email = "dongsoo.kim@stanford.edu"}
+    "Hannah Wayment-Steele <hannah.wayment-steele@stanford.edu>",
+    "Dong Soo Kim <dongsoo.kim@stanford.edu>"
 ]
 maintainers = [
-    {name = "Hannah Wayment-Steele", email = "hannah.wayment-steele@stanford.edu"}
+    "Hannah Wayment-Steele <hannah.wayment-steele@stanford.edu>"
 ]
 keywords = ["RNA", "degradation", "bioinformatics", "machine learning", "structure prediction"]
 classifiers = [
@@ -30,42 +30,34 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Chemistry",
 ]
-requires-python = ">=3.8"
-dependencies = [
-    "numpy>=1.19.0",
+packages = [
+    {include = "DegScore"},
+    {include = "assign_loop_type"},
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=6.0",
-    "pytest-cov>=2.0",
-    "black>=21.0",
-    "flake8>=3.8",
-    "mypy>=0.800",
-]
-arnie = [
-    "arnie>=0.1.0",
-]
-all = [
-    "degscore[dev,arnie]",
-]
+[tool.poetry.dependencies]
+python = "^3.8"
+numpy = "^1.19.0"
 
-[project.urls]
+[tool.poetry.group.dev.dependencies]
+pytest = "^6.0"
+pytest-cov = "^2.0"
+black = "^21.0"
+flake8 = "^3.8"
+mypy = "^0.800"
+
+[tool.poetry.group.arnie.dependencies]
+arnie = "^0.1.0"
+
+[tool.poetry.scripts]
+degscore = "DegScore:main"
+
+[tool.poetry.urls]
 Homepage = "https://github.com/Wayment-Steele-Lab/DegScore"
 Repository = "https://github.com/Wayment-Steele-Lab/DegScore"
 Documentation = "https://github.com/Wayment-Steele-Lab/DegScore#readme"
 "Bug Tracker" = "https://github.com/Wayment-Steele-Lab/DegScore/issues"
 DOI = "https://doi.org/10.5281/zenodo.7130659"
-
-[project.scripts]
-degscore = "DegScore:main"
-
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["DegScore*", "assign_loop_type*"]
-
-[tool.setuptools.package-data]
-"*" = ["*.txt", "*.png", "*.csv", "*.json"]
 
 [tool.black]
 line-length = 88
