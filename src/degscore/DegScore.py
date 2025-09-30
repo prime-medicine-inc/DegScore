@@ -177,3 +177,44 @@ class DegScore():
         self.est_k_deg = k_deg_m*self.degscore + k_deg_b
 
         self.est_half_life = np.log(2)/self.est_k_deg
+
+
+def main():
+    """Command-line interface for DegScore."""
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='DegScore: A ridge regression model to predict RNA degradation')
+    parser.add_argument('sequence', help='RNA sequence')
+    parser.add_argument('--structure', help='RNA dot-bracket structure (optional)')
+    parser.add_argument('--mask-u', action='store_true', help='Mask U positions to mimic pseudouridine stabilization')
+    parser.add_argument('--package', default='eternafold', help='Package for structure prediction (default: eternafold)')
+    parser.add_argument('--linear', action='store_true', help='Use linearfold calculation')
+    parser.add_argument('--start', type=int, help='Starting position to sum degscore')
+    parser.add_argument('--end', type=int, help='Ending position to sum degscore')
+    
+    args = parser.parse_args()
+    
+    try:
+        ds = DegScore(
+            sequence=args.sequence,
+            structure=args.structure,
+            mask_U=args.mask_u,
+            package=args.package,
+            linear=args.linear,
+            start_ind=args.start,
+            end_ind=args.end
+        )
+        
+        print(f"Sequence: {args.sequence}")
+        print(f"Structure: {ds.structure}")
+        print(f"DegScore: {ds.degscore:.4f}")
+        print(f"Estimated degradation rate: {ds.est_k_deg:.6f} hrs^-1")
+        print(f"Estimated half-life: {ds.est_half_life:.2f} hrs")
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

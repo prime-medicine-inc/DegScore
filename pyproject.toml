@@ -30,10 +30,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Chemistry",
 ]
-packages = [
-    {include = "DegScore"},
-    {include = "assign_loop_type"},
-]
+packages = [{include = "degscore", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -50,7 +47,7 @@ mypy = "^0.800"
 arnie = "^0.1.0"
 
 [tool.poetry.scripts]
-degscore = "DegScore:main"
+degscore = "degscore.DegScore:main"
 
 [tool.poetry.urls]
 Homepage = "https://github.com/Wayment-Steele-Lab/DegScore"
