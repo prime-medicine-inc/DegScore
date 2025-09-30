@@ -7,7 +7,7 @@ except ImportError:
     print('Warning: could not find Arnie for DegScore structure prediction.\n\
         Secondary structures must be input in DegScore class.')
 
-from assign_loop_type import write_loop_assignments
+from .assign_loop_type import write_loop_assignments
 DEBUG=False
 
 coeffs_2_1 = [-0.020, -0.027, -0.026, -0.017, 0.005, 0.000, 0.005, -0.006, -0.011, 0.006, 0.031,
